@@ -21,11 +21,9 @@ class PostController extends Controller
         return back();
         
     }
-    public function create()
+    public function create(Post $post)
     {
-        
-        return view('posts.create');
-        
+        return view('posts.create',['post' =>$post]);//se pasa un elemento vacio
     }
     public function edit(Post $post)
     {
