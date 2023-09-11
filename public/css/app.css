@@ -726,6 +726,19 @@ select {
 .mb-6 {
   margin-bottom: 1.5rem;
 }
+.mb-8{
+  margin-bottom: 2rem; /* 32px */
+}
+.opacity-60{
+  backdrop-filter: opacity(0.6);
+}
+.h-px{
+  height: 1px;
+}
+.py-16{
+  padding-top: 4rem; /* 64px */
+  padding-bottom: 4rem; /* 64px */
+}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -1986,4 +1999,6 @@ select {
     padding-right: 2rem;
   }
 }
-
+.h-12{
+  height: 3rem; /* 48px */
+}

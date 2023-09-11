@@ -18,6 +18,28 @@ class PostController extends Controller
         ]);
         
     }
+    public function create(Post $post)
+    {
+        return view('posts.create',['post' => $post]);//se pasa un elemento
+    }
+
+    public function store(Request $request)
+    {
+        $request ->validate([
+            'title'=> 'required',
+            'slug'=> 'required|unique:posts,slug',
+            'body'=> 'required',
+        ],['title.required'=>'Este campo es requerido',
+    'body.required'=>'Este campo es requerido',]);
+
+        $post = $request->user()->posts()->create([
+            'title' => $request -> title, 
+            'slug' => $request -> slug, 
+            'body' => $request -> body, 
+        ]);
+
+        return redirect() -> route('posts.edit',$post);//se pasa un elemento
+    }
 
     public function destroy(Post $post)
     {
@@ -26,30 +48,27 @@ class PostController extends Controller
         
     }
 
-    public function create(Post $post)
-    {
-        return view('posts.create',['post' => $post]);//se pasa un elemento
-    }
-
-    public function store(Request $request)
-    {
-        $post = $request->user()->posts()->create([
-            'title' => $title = $request -> title, 
-            'slug' => Str::slug($title), 
-            'body' => $request -> body, 
-        ]);
-
-        return redirect() -> route('posts.edit',$post);//se pasa un elemento
-    }
-    
-    public function update(Request $request, Post $post)
-    {
-    
-        return redirect()->route('posts.index');
-    }
 
     public function edit(Post $post)
     {
         return view('posts.edit',['post' =>$post]);
+    }
+
+    public function update(Request $request ,Post $post)
+    {
+        $request ->validate([
+            'title'=> 'required',
+            'slug'=> 'required|unique:posts,slug,'. $post->id,
+            'body'=> 'required',
+        ],['title.required'=>'Este campo es requerido',
+        'body.required'=>'Este campo es requerido',]);
+        
+        $post->update([
+            'title' => $request -> title, 
+            'slug' => $request -> slug, 
+            'body' => $request -> body, 
+        ]);
+
+        return redirect() -> route('posts.edit',$post);//se pasa un elemento
     }
 }
