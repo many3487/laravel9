@@ -14,10 +14,8 @@ Route::controller(PageController::class)->group(function (){
 });
 Route::get('/profile/edit')->name('profile.edit');
 
-Route::get('/dashboard', function () {
-    return view('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('dashboard','posts')->name('dashboard');
 
-Route::resource('posts', PostController::class)->except('show');
+Route::resource('posts', PostController::class)->middleware(['auth', 'verified'])->except('show');
 
 require __DIR__.'/auth.php';
